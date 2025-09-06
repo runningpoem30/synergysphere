@@ -1,6 +1,6 @@
 import React from 'react'
 import { ClerkProvider, SignedIn, SignedOut, SignIn, SignUp, UserButton } from '@clerk/clerk-react'
-import Dashboard from './Dashboard'
+//import Dashboard from './Dashboard'
 
 const clerkFrontendApi = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -10,7 +10,7 @@ export default function Auth() {
      
       <SignedIn>
         <UserButton />  
-        <Dashboard />   
+        
       </SignedIn>
 
      
