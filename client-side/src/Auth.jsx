@@ -1,33 +1,34 @@
-import React from 'react'
-import { ClerkProvider, SignedIn, SignedOut, SignIn, SignUp, UserButton } from '@clerk/clerk-react'
-//import Dashboard from './Dashboard'
+// Auth.jsx
+import React from 'react';
+import { 
+  ClerkProvider, 
+  SignedIn, 
+  SignedOut, 
+  UserButton 
+} from '@clerk/clerk-react';
+import { Routes, Route } from 'react-router-dom';
+import SignInPage from './SignInPage';
+import SignUpPage from './SignUpPage';
 
-const clerkFrontendApi = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+const clerkFrontendApi = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 export default function Auth() {
   return (
-    <ClerkProvider frontendApi={clerkFrontendApi}>
-     
+    <ClerkProvider 
+      frontendApi={clerkFrontendApi}
+      navigate={(to) => window.history.pushState(null, '', to)}
+    >
       <SignedIn>
-        <UserButton />  
-        
+        <UserButton afterSignOutUrl="/" />
+        {/* Your protected content here */}
       </SignedIn>
-
-     
+      
       <SignedOut>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '300px', margin: 'auto', marginTop: '100px' }}>
-          <SignIn
-            routing="path"           // default routing mode
-            path="/sign-in"
-            signUpUrl="/sign-up"
-          />
-          <SignUp
-            routing="path"
-            path="/sign-up"
-            redirectUrl="/"          // redirect after successful signup
-          />
-        </div>
+        <Routes>
+          <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+        </Routes>
       </SignedOut>
     </ClerkProvider>
-  )
+  );
 }
